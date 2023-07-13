@@ -16,8 +16,8 @@ dependencies:
   flutter_undo:
     path: "../flutter_undo"
 
-  nf_hotkeys:
-    path: "../nf_hotkeys"
+  nf_flutter_hotkeys:
+    path: "../nf_flutter_hotkeys"
 
   dart_ilogger:
     path: "../dart_ilogger"

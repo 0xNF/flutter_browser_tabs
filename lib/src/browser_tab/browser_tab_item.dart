@@ -8,11 +8,11 @@ class BrowserTabItem extends StatefulWidget {
   final Widget child;
 
   const BrowserTabItem({
-    Key? key,
+    super.key,
     required this.metadata,
     required this.checkDisposed,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<BrowserTabItem> createState() => _BrowserTabItemState();

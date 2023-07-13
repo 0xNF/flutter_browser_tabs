@@ -8,10 +8,10 @@ class BrowserTabTitle extends StatefulWidget {
   final void Function(BrowserTabMetadata) onTabClose;
   final bool canCloseTab;
   const BrowserTabTitle({
-    Key? key,
+    super.key,
     required this.onTabClose,
     required this.canCloseTab,
-  }) : super(key: key);
+  });
 
   @override
   State<BrowserTabTitle> createState() => BrowserTabTitleState();
@@ -41,7 +41,10 @@ class BrowserTabTitleState extends State<BrowserTabTitle> {
         children: [
           Tooltip(
             message: metadata!.tabTitle,
-            child: Text(metadata!.tabTitle),
+            child: Text(
+              metadata!.tabTitle,
+              // style: TextStyle(color: selected),
+            ),
           ),
           Visibility(
             maintainSize: true,

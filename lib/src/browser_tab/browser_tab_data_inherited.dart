@@ -7,11 +7,11 @@ class BrowserTabDataInherited extends InheritedWidget {
   final TabHotkeys hotkeys;
 
   const BrowserTabDataInherited({
-    Key? key,
+    super.key,
+    required super.child,
     required this.metadata,
     required this.hotkeys,
-    required Widget child,
-  }) : super(key: key, child: child);
+  });
 
   static BrowserTabDataInherited of(BuildContext context) {
     final BrowserTabDataInherited? result = context.dependOnInheritedWidgetOfExactType<BrowserTabDataInherited>();

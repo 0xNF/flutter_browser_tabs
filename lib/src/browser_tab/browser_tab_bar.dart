@@ -16,7 +16,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function() onAddTab;
 
   const BrowserTabBar({
-    Key? key,
+    super.key,
     required this.tabController,
     required this.tabs,
     required this.tabHotkeys,
@@ -24,7 +24,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
     required this.onShowTabById,
     required this.onShowTabByIndex,
     required this.onAddTab,
-  }) : super(key: key);
+  });
 
   /// Generates the List of available tabs when the user clicks the List Tabs button
   List<PopupMenuEntry<int>> _generateTabSelectioList() {

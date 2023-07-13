@@ -5,6 +5,8 @@ export 'package:flutter_browser_tabs/src/browser_tab/browser_tab_item.dart';
 export 'package:flutter_browser_tabs/src/browser_tab/browser_tab_metadata.dart';
 export 'package:flutter_browser_tabs/src/browser_tab/browser_tab_title.dart';
 
+export 'package:flutter_browser_tabs/src/tab_view/tab_view.dart';
+
 export 'package:flutter_browser_tabs/src/events.dart';
 export 'package:flutter_browser_tabs/src/browser_tab/browser_tab.dart';
 

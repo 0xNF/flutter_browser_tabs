@@ -14,13 +14,18 @@ dependencies:
     sdk: flutter
 
   flutter_undo:
-    path: "../flutter_undo"
+    git:
+      url: https://github.com/0xNF/flutter_undo
+    # path: "../flutter_undo"
 
   nf_flutter_hotkeys:
-    path: "../nf_flutter_hotkeys"
+    git:
+      url: https://github.com/0xNF/nf_flutter_hotkeys
 
   dart_ilogger:
-    path: "../dart_ilogger"
+    git:
+      url: https://github.com/0xNF/dart_ilogger
+    # path: "../dart_ilogger"
 
 dev_dependencies:
   flutter_test:

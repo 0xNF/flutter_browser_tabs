@@ -76,6 +76,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
               tooltip: "Select tab",
               onSelected: onShowTabById,
               itemBuilder: (ctx) => _generateTabSelectioList(),
+              color: Theme.of(context).colorScheme.onPrimary,
               icon: const Icon(
                 Icons.list,
               ),
@@ -83,6 +84,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               tooltip: "Add tab (${UserHotkeys.commandStringFromHotkey(tabHotkeys.newTab)})",
               onPressed: onAddTab,
+              color: Theme.of(context).colorScheme.onPrimary,
               icon: const Icon(
                 Icons.add,
               ),

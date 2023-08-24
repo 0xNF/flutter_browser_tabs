@@ -68,6 +68,12 @@ class _TabViewState extends State<TabView> with TickerProviderStateMixin {
   /// Listener for when a tabs title changes
   late final StreamSubscription<EventTabTitleChanged> _tabTitleChangedSub;
 
+  /// Listener for when a tab is programatically requested to be closed
+  late final StreamSubscription<EventTabCloseTab> _tabClosedSub;
+
+  /// Listener for when all tabs are requested to be closed
+  late final StreamSubscription<EventTabCloseAll> _tabClosedAllSub;
+
   /// Returns the active tab that this Window is showing
   ///
   /// Returns null if no tabs, or if invalid
@@ -218,13 +224,29 @@ class _TabViewState extends State<TabView> with TickerProviderStateMixin {
     return true;
   }
 
-  /// Callback method for when a Tab's title changes
+  /// Callback method for when a Tab's title is requested to be changed
   void _onTabTitleChanged(EventTabTitleChanged evt) {
     for (var g in tabs) {
       if (g.metadata.tabId == evt.tabId) {
         setState(() => g.metadata.tabTitle = evt.newTitle);
         break;
       }
+    }
+  }
+
+  /// Callback method for when a tab is requested to be closed
+  void _onTabClosed(EventTabCloseTab evt) {
+    if (_canCloseTab(evt.tabId, evt.force)) {
+      _closeById(evt.tabId, force: evt.force);
+    }
+  }
+
+  /// Callback method for when all tabs are requested to be closed
+  void _onAllTabsClosed(EventTabCloseAll evt) {
+    /* Avoid closing the active-tab, unless `force` is specified */
+    final eligibleTabs = evt.force ? tabs : tabs.whereNot((element) => element.metadata.tabId == activeTabId);
+    for (final tab in eligibleTabs) {
+      _closeById(tab.metadata.tabId);
     }
   }
 
@@ -254,7 +276,7 @@ class _TabViewState extends State<TabView> with TickerProviderStateMixin {
   ///
   /// set `force=true` if you want to delete a tab without any of the tab requirement checks
   ///
-  /// if `widget.atLeastOneTab` is true, then the last remaiing tab cannot be closed
+  /// if `widget.atLeastOneTab` is true, then the last remaining tab cannot be closed
   bool _canCloseTab(int tabId, bool force) {
     if (force) {
       return true;
@@ -267,10 +289,20 @@ class _TabViewState extends State<TabView> with TickerProviderStateMixin {
 
   /// Closes a Tab, subject to the rules of [_canCloseTab]
   void _onTabClose(BrowserTabMetadata tabMetadata, {bool force = false}) {
-    int idx = tabs.indexWhere((x) => x.metadata.tabId == tabMetadata.tabId);
-    bool canClose = _canCloseTab(tabMetadata.tabId, force);
+    final tab = tabs.firstWhereOrNull((x) => x.metadata.tabId == tabMetadata.tabId);
+    if (tab == null) {
+      return;
+    }
+    _closeById(tab.metadata.tabId);
+  }
+
+  /// Closed a tab by the given TabId
+  void _closeById(int tabId, {bool force = false}) {
+    final idx = tabs.indexWhere((x) => x.metadata.tabId == tabId);
+    final tab = tabs[idx];
+    bool canClose = _canCloseTab(tabId, force);
     if (idx > -1 && canClose) {
-      logger.info("Closing tab with Id ${tabMetadata.tabId} (${tabMetadata.tabTitle})");
+      logger.info("Closing tab with Id $tabId (${tab.metadata.tabTitle})");
       setState(() {
         tabs.removeAt(idx);
         _tabController = _createOrReplaceTabController();
@@ -330,6 +362,8 @@ class _TabViewState extends State<TabView> with TickerProviderStateMixin {
     super.initState();
     tabHotkeys = widget.tabHotkeys ?? TabHotkeys.webBrowser();
     _tabTitleChangedSub = eventBus.on<EventTabTitleChanged>().listen(_onTabTitleChanged);
+    _tabClosedSub = eventBus.on<EventTabCloseTab>().listen(_onTabClosed);
+    _tabClosedAllSub = eventBus.on<EventTabCloseAll>().listen(_onAllTabsClosed);
     activeTabId = 0;
     _tabController = _createOrReplaceTabController();
     if (widget.atLeastOneTab) {
@@ -343,6 +377,15 @@ class _TabViewState extends State<TabView> with TickerProviderStateMixin {
     if (tabs.length != _tabController?.length) {
       _tabController = _createOrReplaceTabController();
     }
+  }
+
+  @override
+  void dispose() {
+    _tabClosedAllSub.cancel();
+    _tabClosedSub.cancel();
+    _tabTitleChangedSub.cancel();
+    _tabController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -417,7 +460,7 @@ class _TabViewState extends State<TabView> with TickerProviderStateMixin {
                   maintainState: true,
                   maintainSize: true,
                   maintainInteractivity: false,
-                  child: BrowserTabDataInherited(
+                  child: InheritedBrowserTabData(
                     hotkeys: tabHotkeys,
                     metadata: e.metadata,
                     child: e.child,

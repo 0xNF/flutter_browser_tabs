@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_browser_tabs/src/browser_tab/browser_tab.dart';
 import 'package:flutter_browser_tabs/src/browser_tab/browser_tab_title.dart';
-import 'package:flutter_browser_tabs/src/browser_tab/browser_tab_data_inherited.dart';
+import 'package:flutter_browser_tabs/src/browser_tab/inherited_browser_tab_data.dart';
 import 'package:flutter_browser_tabs/src/browser_tab/browser_tab_metadata.dart';
 import 'package:nf_flutter_hotkeys/nf_hotkeys.dart';
 
@@ -9,6 +9,8 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController tabController;
   final List<BrowserTab> tabs;
   final TabHotkeys tabHotkeys;
+  final Color? rowColor;
+  final Color? iconColor;
   final void Function(BrowserTabMetadata metadata) onTabClose;
   final void Function(int tabId) onShowTabById;
   final void Function(int tabIndex) onShowTabByIndex;
@@ -16,6 +18,8 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
 
   const BrowserTabBar({
     super.key,
+    this.rowColor,
+    this.iconColor,
     required this.tabController,
     required this.tabs,
     required this.tabHotkeys,
@@ -50,7 +54,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
     return (PreferredSize(
       preferredSize: const Size(100, 50),
       child: Container(
-        color: Theme.of(context).primaryColor,
+        color: rowColor ?? Theme.of(context).primaryColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -59,7 +63,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
                 controller: tabController,
                 tabs: tabs
                     .map((e) => Tab(
-                          child: BrowserTabDataInherited(
+                          child: InheritedBrowserTabData(
                             hotkeys: tabHotkeys,
                             metadata: e.metadata,
                             child: BrowserTabTitle(
@@ -76,7 +80,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
               tooltip: "Select tab",
               onSelected: onShowTabById,
               itemBuilder: (ctx) => _generateTabSelectioList(),
-              color: Theme.of(context).colorScheme.onPrimary,
+              color: iconColor ?? Theme.of(context).colorScheme.onPrimary,
               icon: const Icon(
                 Icons.list,
               ),
@@ -84,7 +88,7 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               tooltip: "Add tab (${UserHotkeys.commandStringFromHotkey(tabHotkeys.newTab)})",
               onPressed: onAddTab,
-              color: Theme.of(context).colorScheme.onPrimary,
+              color: iconColor ?? Theme.of(context).colorScheme.onPrimary,
               icon: const Icon(
                 Icons.add,
               ),

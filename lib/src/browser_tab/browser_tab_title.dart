@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_browser_tabs/src/browser_tab/browser_tab_data_inherited.dart';
+import 'package:flutter_browser_tabs/src/browser_tab/inherited_browser_tab_data.dart';
 import 'package:nf_flutter_hotkeys/nf_hotkeys.dart';
 import 'browser_tab_metadata.dart';
 
@@ -27,7 +27,7 @@ class BrowserTabTitleState extends State<BrowserTabTitle> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    metadata = BrowserTabDataInherited.of(context).metadata;
+    metadata = InheritedBrowserTabData.of(context).metadata;
   }
 
   @override
@@ -53,7 +53,7 @@ class BrowserTabTitleState extends State<BrowserTabTitle> {
             visible: widget.canCloseTab && selected,
             child: IconButton(
               onPressed: widget.canCloseTab ? onTabCloseClicked : null,
-              tooltip: "Close this tab (${UserHotkeys.commandStringFromHotkey(BrowserTabDataInherited.of(context).hotkeys.closeTab)})",
+              tooltip: "Close this tab (${UserHotkeys.commandStringFromHotkey(InheritedBrowserTabData.of(context).hotkeys.closeTab)})",
               icon: const Icon(Icons.close),
               iconSize: 15,
               constraints: const BoxConstraints(),

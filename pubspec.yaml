@@ -5,7 +5,7 @@ homepage: https://github.com/0xnf/flutter_browser_tabs
 publish_to: none # todo(nf): when hotkeys is published, publish this
 
 environment:
-  sdk: ">=2.17.1 <3.0.0"
+  sdk: ">=3.0.6 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:

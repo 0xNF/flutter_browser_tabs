@@ -62,15 +62,24 @@ class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
               child: TabBar(
                 controller: tabController,
                 tabs: tabs
-                    .map((e) => Tab(
-                          child: InheritedBrowserTabData(
-                            hotkeys: tabHotkeys,
-                            metadata: e.metadata,
-                            child: BrowserTabTitle(
-                              onTabClose: onTabClose,
-                              canCloseTab: tabs.length > 1,
-                            ),
-                          ),
+                    .map((e) => DragTarget<Object>(
+                          builder: (ctx, candidtateItems, rejectedItems) {
+                            return Tab(
+                              child: InheritedBrowserTabData(
+                                hotkeys: tabHotkeys,
+                                metadata: e.metadata,
+                                child: BrowserTabTitle(
+                                  onTabClose: onTabClose,
+                                  canCloseTab: tabs.length > 1,
+                                ),
+                              ),
+                            );
+                          },
+                          onWillAccept: (_) {
+                            /* ALL draggable data triggers a tab switch */
+                            onShowTabById(e.metadata.tabId);
+                            return true;
+                          },
                         ))
                     .toList(),
                 isScrollable: true,

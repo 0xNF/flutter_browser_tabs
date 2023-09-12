@@ -2,7 +2,7 @@ name: flutter_browser_tabs
 description: Provides ability to wrap widgets in tabs that behave like the tab bar in Firefox or Chrome do
 version: 0.0.1
 homepage: https://github.com/0xnf/flutter_browser_tabs
-publish_to: none # todo(nf): when hotkeys is published, publish this
+repository: https://github.com/0xnf/flutter_browser_tabs
 
 environment:
   sdk: ">=3.0.6 <4.0.0"
@@ -15,9 +15,7 @@ dependencies:
 
   nf_flutter_undo: ^0.0.2
 
-  nf_flutter_hotkeys:
-    git:
-      url: https://github.com/0xNF/nf_flutter_hotkeys
+  nf_flutter_hotkeys: ^0.0.1
 
   ilogger: 0.1.0
 

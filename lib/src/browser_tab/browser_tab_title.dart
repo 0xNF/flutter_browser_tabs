@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_browser_tabs/src/browser_tab/inherited_browser_tab_data.dart';
-import 'package:nf_flutter_hotkeys/nf_hotkeys.dart';
+import 'package:nf_flutter_hotkeys/nf_flutter_hotkeys.dart';
 import 'browser_tab_metadata.dart';
 
 class BrowserTabTitle extends StatefulWidget {

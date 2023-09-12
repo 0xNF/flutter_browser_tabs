@@ -3,7 +3,7 @@ import 'package:flutter_browser_tabs/src/browser_tab/browser_tab.dart';
 import 'package:flutter_browser_tabs/src/browser_tab/browser_tab_title.dart';
 import 'package:flutter_browser_tabs/src/browser_tab/inherited_browser_tab_data.dart';
 import 'package:flutter_browser_tabs/src/browser_tab/browser_tab_metadata.dart';
-import 'package:nf_flutter_hotkeys/nf_hotkeys.dart';
+import 'package:nf_flutter_hotkeys/nf_flutter_hotkeys.dart';
 
 class BrowserTabBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController tabController;

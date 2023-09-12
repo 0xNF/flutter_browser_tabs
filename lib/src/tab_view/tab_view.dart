@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_browser_tabs/flutter_browser_tabs.dart';
-import 'package:flutter_undo/flutter_undo.dart' as undo;
+import 'package:nf_flutter_hotkeys/nf_flutter_hotkeys.dart';
+import 'package:nf_flutter_undo/nf_flutter_undo.dart' as undo;
 import 'package:collection/collection.dart';
-import 'package:nf_flutter_hotkeys/nf_hotkeys.dart';
 
 /// Window holds state related to a singleton instance of Gravio Studio
 ///

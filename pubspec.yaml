@@ -17,7 +17,7 @@ dependencies:
 
   nf_flutter_hotkeys: ^0.0.1
 
-  ilogger: 0.1.0
+  ilogger: ^0.1.0
 
 dev_dependencies:
   flutter_test:

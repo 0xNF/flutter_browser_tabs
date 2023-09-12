@@ -22,7 +22,7 @@ dependencies:
     git:
       url: https://github.com/0xNF/nf_flutter_hotkeys
 
-  dart_ilogger:
+  ilogger:
     git:
       url: https://github.com/0xNF/dart_ilogger
     # path: "../dart_ilogger"

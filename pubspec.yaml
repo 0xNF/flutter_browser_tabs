@@ -13,10 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_undo:
-    git:
-      url: https://github.com/0xNF/flutter_undo
-    # path: "../flutter_undo"
+  nf_flutter_undo: ^0.0.2
 
   nf_flutter_hotkeys:
     git:
